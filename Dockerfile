@@ -38,8 +38,8 @@ RUN --mount=type=cache,id=apk-$TARGETARCH$TARGETVARIANT,sharing=locked,target=/v
     cp /ffprobe /usr/bin/ && \
     cp /dumb-init /usr/bin/
 
-# Remove these to prevent the container from executing arbitrary commands
-RUN rm /bin/echo /bin/ln /bin/rm /bin/sh
+# # Remove these to prevent the container from executing arbitrary commands
+# RUN rm /bin/echo /bin/ln /bin/rm /bin/sh
 
 WORKDIR /download
 
