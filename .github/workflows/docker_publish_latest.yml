@@ -28,10 +28,9 @@ jobs:
         id: setup
         uses: ./.github/workflows/docker-reused-setup-steps
         with:
+          DOCKERHUB_ORGANIZATION_NAME : ${{ secrets.DOCKERHUB_ORGANIZATION_NAME }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-          QUAY_TOKEN: ${{ secrets.QUAY_TOKEN }}
           tag: latest
 
       - name: Build and push
