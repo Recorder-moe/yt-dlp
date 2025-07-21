@@ -3,17 +3,14 @@ name: Setup docker
 description: Configure the docker workflow.
 
 inputs:
+  DOCKERHUB_ORGANIZATION_NAME :
+    description: "DockerHub organization name"
+    required: true
   DOCKERHUB_USERNAME:
     description: "DockerHub username"
     required: true
   DOCKERHUB_TOKEN:
     description: "DockerHub access token"
-    required: true
-  QUAY_USERNAME:
-    description: "Quay username"
-    required: true
-  QUAY_TOKEN:
-    description: "Quay access token"
     required: true
   tag:
     description: "Tag for the image"
@@ -34,7 +31,7 @@ runs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ${{ inputs.DOCKERHUB_USERNAME }}/yt-dlp,ghcr.io/${{ github.repository_owner }}/yt-dlp,quay.io/${{ github.repository_owner }}/yt-dlp
+        images: ${{ inputs.DOCKERHUB_ORGANIZATION_NAME }}/yt-dlp,ghcr.io/${{ github.repository_owner }}/yt-dlp
         flavor: |
           latest=${{ inputs.tag == 'latest' }}
         tags: |
@@ -65,10 +62,3 @@ runs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ github.token }}
-
-    - name: Login to Quay Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: quay.io
-        username: ${{ inputs.QUAY_USERNAME }}
-        password: ${{ inputs.QUAY_TOKEN }}
