@@ -35,6 +35,11 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
           tag: latest
 
+      - name: Get the latest version number of yt-dlp
+        id: get_version
+        run: |
+          echo "VERSION=$(curl -s https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest | jq -r '.tag_name')" >> $GITHUB_ENV
+
       - name: Build and push
         id: build_push
         uses: docker/build-push-action@v6
@@ -47,7 +52,7 @@ jobs:
           tags: ${{ steps.setup.outputs.tags }}
           labels: ${{ steps.setup.outputs.labels }}
           build-args: |
-            VERSION=latest
+            VERSION=${{ env.VERSION }}
             RELEASE=${{ github.run_number }}
           platforms: linux/amd64 #,linux/arm64
           sbom: true
