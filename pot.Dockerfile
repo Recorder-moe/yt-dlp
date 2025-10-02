@@ -15,7 +15,7 @@ RUN install -d -m 775 -o $UID -g 0 /newdir
 ########################################
 # Final stage
 ########################################
-FROM scratch AS final
+FROM busybox:1 AS final
 
 # Copy CA trust store
 # Rust seems to use this one: https://stackoverflow.com/a/57295149/8706033
@@ -52,6 +52,8 @@ ARG VERSION
 
 # yt-dlp
 ADD --link --chown=$UID:0 --chmod=775 https://github.com/yt-dlp/yt-dlp/releases/download/${VERSION}/yt-dlp_linux /usr/bin/yt-dlp
+
+ENV PATH="/:$PATH"
 
 WORKDIR /download
 
